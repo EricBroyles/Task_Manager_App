@@ -1,0 +1,156 @@
+Naming Essentials for React-Task-Manager
+all variables should have the same variable name
+use _name for any throw away variables
+class names for CSS, should begin CSS_Name of main compoennts Ie name of whole function_
+then name of the respective sub component_then name of next subcomponent etc.
+
+//for any given function check the code to see details
+
+in App: btnCreateOrComplete is to toggle between creat and complete on the display for the c
+reate or add main button
+
+Note: this is one way that I could have done it
+in App: successMessage is to display to the user that the task was completed it will togle between 
+block (display the text), and none which will hide the text
+
+instead I chose to have successMessage just dispaly text relevant to wether the bntCreateComplete has been toggled
+although it should initially not display anything
+
+in APP:
+displayTextInputs will only display the texts that you input task info into if the button to create has been clicked and they are hidden when the button is completed
+will toggle from hidden to text
+
+in APp: taskID is a number that starts from 1 and is assigned to each item in the list in order of their addition,
+note when an item is removed all IDs will NOT need to be changed to accomidate this, I hope
+
+
+
+display will be used as a general boolean used as a conditional rendering
+
+the override const in View Task and also passed to task from both APP and VIew... will dertermine if the opposite of the Task being 
+show should be shown. Ie show the complete ones not displayeed
+
+Notice how tasklist is passed from app.js header call, to header, and then to View Essentials
+
+
+View Task is most likly renning into an infinite loop issue, so you may want to find a way to stop re rendering with 
+controls and booleans and such. 
+
+
+OR Scap this idea and go to somthing that: when an Task is not displayed it is then passed to view complete tasks, added to a list and when the button is clicked the list is displayed.
+going to use the return statment for em[ty divs in task] 
+
+Really need the () for stuff like
+{displayTasks()}
+    {handleDisplayCompletedTasks()}
+
+    Notice the isCOmplete in both of the Task calls, Use this Please to do stuff in the future
+    the button in Task is so broken I dont even know 
+
+    Note you can just use a list like any variable when displaying it, ie list =[1,2,3]<p>list</p> gets 123
+
+
+***************************************************************
+    pay attention to where a list already has a list in it
+    instead of simply trying to plug a new array into a useStte of list that has already had a list, you could clear the list
+
+    and then use .foreach, adn .push to push all the intended items into into the list
+
+
+
+    Be Very carful when defining thing in an useState object
+
+const do a thing
+    setStateOfANObjects({...allitemsInTHEOBJNotChange, change the object for one thing}) //one
+    setStateOfANObjects({...allitemsInTHEOBJNotChange, change the object for another thing})
+
+    this does not work properly as line one does not properly complete its task in the function due to useState being weird
+
+    so be sure to do the following
+
+    setStateOfANObjects({...allitemsINthe objNotChange, change for one thing, change for another thing}) //this gets the job done
+
+
+KEYS ARE NOT OPTIONAL
+
+<div className = "CSS_TaskList">
+        {displayList.map((task) => (
+          <div key={task.id}>
+            <Task 
+              isComplete = {false}
+              taskID = {task.id} 
+              nameAssignment = {task.nameAssignment} 
+              nameClass = {task.nameClass} 
+              date = {task.inputDate}
+            />
+          </div>
+       ))}
+        </div>
+
+
+when I call a const in an onClick and try to pass paremeters it fails: this is due to the parameters already being apart of the function
+
+cont whaterer = () => {
+
+do a thing
+}
+
+   <div>
+   
+   map over a list of object tasks(
+
+    <button onClick= whatever></button>
+   )
+   
+   </div>    
+
+   dont pass whatever the task or pass it task.objectcomponents
+
+   as I think that the code is bassically the same as
+
+    <div>
+   
+   map over a list of object tasks(
+
+    <button onClick= () => {do a thing with task.component}></button>
+   )
+   
+   </div> 
+
+   so in the previous example you could just use task.objcompoent inside of the const as its scope is inside of the map over all the tasks
+
+
+   Notice how this does not do what I want
+   const prevID = taskInfo.id
+      setTaskInfo({...taskInfo, id: prevID + 1})
+      const prevKey = taskInfo.keyVal
+      setTaskInfo({...taskInfo, keyVal: prevKey + 1})
+
+      but this does
+
+      const prevID = taskInfo.id
+      const prevKey = taskInfo.keyVal
+      setTaskInfo({...taskInfo, id: prevID + 1, keyVal: prevKey + 1})
+
+
+
+      Notice how in this map I am making a function to return the div
+      {viewList.map((day, index) => {
+                    if(index < 7){
+                        return(
+                            <td>
+                            Here i will have another map but for all of the obj in day
+                            </td>
+                        )
+                    }
+                })}
+      pay attention to the use of curly braces vs other uses of map that would use parenthesis
+
+
+
+      Whatch your order of operations
+      rowNum-1 *7, is rownum-7
+
+      IF IN DOUBT WHEN TRYING TO RENDER HTML FROM A CONST THINK AN I RETURNING
+      alse 
+      {makePopup()} and makePopup are very different, one does a return with () the other is just for onclicks and stuff, i think
